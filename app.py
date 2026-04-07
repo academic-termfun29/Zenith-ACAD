@@ -17,3 +17,9 @@ def connect_sheet():
       if str(record['student_id']) == str(user_id):
         return record
     return None 
+
+genai.configure(api_key=st.secrets["AIzaSyAuSBuHOzQAdRZxVZ2meF0ioqj3OUMOSto"])
+model = genai.GenerativeModel('gemini-pro')
+
+def generate_feedback(user_data):
+  prompt = f"""
