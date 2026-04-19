@@ -348,20 +348,6 @@ def create_pdf_bytes(user_id: str, profile: dict | None, answers: dict, analysis
     else:
         content.append(Paragraph("ไม่พบข้อมูลจากระบบ", normal_style))
 
-    prepost_rows = get_prepost_scores(profile or {})
-    if any(r["pre"] is not None or r["post"] is not None for r in prepost_rows):
-        content.append(Spacer(1, 8))
-        content.append(Paragraph("คะแนน Pre-test / Post-test", header_style))
-        for row in prepost_rows:
-            delta_text = "-" if row["delta"] is None else f"{row['delta']:+.1f}"
-            line = (
-                f"<b>{sanitize_pdf_text(row['label_th'])}</b>: "
-                f"Pre-test {format_score(row['pre'])} | "
-                f"Post-test {format_score(row['post'])} | "
-                f"ผลต่าง {sanitize_pdf_text(delta_text)}"
-            )
-            content.append(Paragraph(line, normal_style))
-
     content.append(Spacer(1, 8))
     content.append(Paragraph("คำตอบของนักเรียน", header_style))
     for key, label in QUESTION_MAP.items():
