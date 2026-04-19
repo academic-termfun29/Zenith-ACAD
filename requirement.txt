@@ -1,4 +1,7 @@
 streamlit
+google-generativeai
 gspread
 google-auth
-google-generative
+google-api-core
+reportlab
+supabase
