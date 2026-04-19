@@ -3,6 +3,7 @@ import os
 import time
 from io import BytesIO
 from pathlib import Path
+import json
 
 import google.generativeai as genai
 import gspread
@@ -251,9 +252,22 @@ require_config("SERVICE_ACCOUNT_FILE", SERVICE_ACCOUNT_FILE)
 require_config("SUPABASE_URL", SUPABASE_URL)
 require_config("SUPABASE_KEY", SUPABASE_KEY)
 
-if not os.path.exists(SERVICE_ACCOUNT_FILE):
-    st.error(f"ไม่พบไฟล์ service account ตาม path ที่ระบุไว้: {SERVICE_ACCOUNT_FILE}")
-    st.stop()
+def ensure_service_account_file() -> str:
+    # ใช้จาก Streamlit secrets
+    if "gcp_service_account" in st.secrets:
+        temp_path = "/tmp/gcp_service_account.json"
+        with open(temp_path, "w", encoding="utf-8") as f:
+            json.dump(dict(st.secrets["gcp_service_account"]), f)
+        return temp_path
+
+    # fallback: ใช้ไฟล์ local (กรณีรันเครื่องตัวเอง)
+    service_account_file = os.getenv("SERVICE_ACCOUNT_FILE")
+    if service_account_file and os.path.exists(service_account_file):
+        return service_account_file
+
+    raise FileNotFoundError(
+        "ไม่พบ service account ทั้งใน st.secrets และ environment variables"
+    )
 
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel(MODEL_NAME)
@@ -262,9 +276,10 @@ model = genai.GenerativeModel(MODEL_NAME)
 # =========================================================
 # GOOGLE SHEETS
 # =========================================================
-def get_google_credentials() -> Credentials:
+def get_google_credentials():
     scopes = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
-    return Credentials.from_service_account_file(SERVICE_ACCOUNT_FILE, scopes=scopes)
+    service_account_path = ensure_service_account_file()
+    return Credentials.from_service_account_file(service_account_path, scopes=scopes)
 
 
 @st.cache_resource
