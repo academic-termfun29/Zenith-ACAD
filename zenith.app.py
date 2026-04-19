@@ -29,8 +29,8 @@ load_dotenv()
 
 st.set_page_config(page_title="Zenith Roadmap Generator", page_icon="🌟", layout="centered")
 
-APP_TITLE = "🌟 Zenith Roadmap Generator"
-APP_SUBTITLE = "ประมวลผล AI และ export roadmap เป็น PDF"
+APP_TITLE = "🌟 Zenith-FindYourDream"
+APP_SUBTITLE = "เครื่องมือประมวลผลสร้าง Roadmap รายบุคคล"
 
 QUESTION_MAP = {
     "q1": "1) คุณสนใจเรื่องอะไรเป็นพิเศษ หรือชอบเรียนรู้อะไร",
