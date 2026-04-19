@@ -5,3 +5,4 @@ google-api-core
 reportlab
 supabase
 google-generativeai>=0.7.2
+python-dotenv>=1.0.0
