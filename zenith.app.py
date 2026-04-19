@@ -1,7 +1,3 @@
-import subprocess
-import sys
-
-
 import html
 import os
 import time
@@ -20,7 +16,6 @@ from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Paragraph, SimpleDocTemplate, Spacer
 from supabase import Client, create_client
 
-subprocess.check_call([sys.executable, "-m", "pip", "install", "google-generativeai"])
 # =========================================================
 # CONFIG
 # =========================================================
