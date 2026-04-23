@@ -30,282 +30,207 @@ load_dotenv()
 st.set_page_config(page_title="Zenith Roadmap Generator", page_icon="🌟", layout="centered")
 
 
-SKY_CSS = """
+MINIMAL_CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&display=swap');
 
 :root {
-    --sky-1: #f6fbff;
-    --sky-2: #eaf6ff;
-    --sky-3: #d9efff;
-    --sky-4: #c7e6ff;
-    --sky-5: #7cc7ff;
-    --sky-6: #2f8cff;
-    --text-main: #12324a;
-    --text-soft: #4f6f88;
-    --stroke: rgba(135, 185, 230, 0.35);
-    --card-bg: rgba(255, 255, 255, 0.70);
-    --shadow: 0 20px 50px rgba(64, 143, 217, 0.12);
+    --bg: #f7fbff;
+    --surface: #ffffff;
+    --surface-2: #f3f9ff;
+    --border: #d9e9f7;
+    --primary: #2f80ed;
+    --primary-soft: #eaf4ff;
+    --text: #16324a;
+    --muted: #6b859c;
+    --shadow: 0 6px 20px rgba(25, 96, 160, 0.06);
+    --radius: 18px;
 }
 
-html, body, [class*="css"]  {
+html, body, [class*="css"] {
     font-family: 'IBM Plex Sans Thai', sans-serif;
 }
 
 .stApp {
-    background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.45) 18%, rgba(255,255,255,0) 36%),
-        radial-gradient(circle at top right, rgba(178,226,255,0.60) 0%, rgba(178,226,255,0.18) 20%, rgba(178,226,255,0) 40%),
-        linear-gradient(180deg, var(--sky-1) 0%, var(--sky-2) 42%, var(--sky-3) 100%);
-    color: var(--text-main);
+    background: linear-gradient(180deg, #f9fcff 0%, #f3f9ff 100%);
+    color: var(--text);
 }
 
 .block-container {
-    max-width: 920px;
-    padding-top: 2rem;
-    padding-bottom: 3rem;
+    max-width: 760px;
+    padding-top: 1.75rem;
+    padding-bottom: 2.5rem;
 }
 
 [data-testid="stHeader"] {
-    background: rgba(255,255,255,0);
+    background: transparent;
 }
 
-[data-testid="stToolbar"] {
-    right: 1rem;
+.app-header {
+    margin-bottom: 1.1rem;
 }
 
-.sky-hero {
-    position: relative;
-    overflow: hidden;
-    border-radius: 30px;
-    padding: 2rem 2rem 1.5rem 2rem;
-    margin-bottom: 1rem;
-    background: linear-gradient(145deg, rgba(255,255,255,0.90), rgba(232,245,255,0.82));
-    border: 1px solid rgba(180, 220, 255, 0.9);
-    box-shadow: 0 24px 70px rgba(74, 149, 213, 0.14);
-}
-.sky-hero:before, .sky-hero:after {
-    content: "";
-    position: absolute;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.48);
-    filter: blur(2px);
-}
-.sky-hero:before {
-    width: 180px;
-    height: 180px;
-    top: -55px;
-    right: -30px;
-}
-.sky-hero:after {
-    width: 130px;
-    height: 130px;
-    bottom: -45px;
-    left: -20px;
-}
-.sky-badge {
-    display: inline-block;
-    padding: 0.38rem 0.8rem;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.80);
-    color: #2176d2;
-    border: 1px solid rgba(117, 186, 255, 0.45);
-    font-size: 0.82rem;
-    font-weight: 600;
-    margin-bottom: 0.9rem;
-}
-.sky-title {
-    font-size: 2rem;
+.app-title {
+    font-size: 1.8rem;
     font-weight: 700;
-    line-height: 1.18;
-    color: #0f3f75;
-    margin-bottom: 0.35rem;
-}
-.sky-subtitle {
-    font-size: 1rem;
-    line-height: 1.7;
-    color: var(--text-soft);
-    max-width: 760px;
-}
-.sky-grid {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 0.8rem;
-    margin-top: 1.1rem;
-}
-.sky-mini-card {
-    background: rgba(255,255,255,0.62);
-    border: 1px solid rgba(165, 212, 255, 0.60);
-    border-radius: 22px;
-    padding: 0.9rem 1rem;
-    box-shadow: var(--shadow);
-}
-.sky-mini-label {
-    font-size: 0.74rem;
-    font-weight: 600;
-    color: #5b84a3;
-    margin-bottom: 0.22rem;
-}
-.sky-mini-value {
-    font-size: 1rem;
-    font-weight: 700;
-    color: #113f66;
-}
-
-.section-shell {
-    background: var(--card-bg);
-    border: 1px solid var(--stroke);
-    border-radius: 26px;
-    padding: 1.1rem 1.1rem 1.25rem 1.1rem;
-    box-shadow: var(--shadow);
-    backdrop-filter: blur(12px);
-    margin-bottom: 1rem;
-}
-
-.section-heading {
-    font-size: 1.08rem;
-    font-weight: 700;
-    color: #12426c;
+    color: var(--text);
     margin-bottom: 0.25rem;
 }
-.section-copy {
+
+.app-subtitle {
+    font-size: 0.96rem;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.1rem 1.1rem 1rem 1.1rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 1rem;
+}
+
+.card-title {
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.2rem;
+}
+
+.card-subtitle {
     font-size: 0.92rem;
-    line-height: 1.65;
-    color: var(--text-soft);
-    margin-bottom: 0.75rem;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+    line-height: 1.6;
 }
 
-div[data-testid="stSelectbox"] > label,
-div[data-testid="stTextArea"] > label {
-    font-weight: 600 !important;
-    color: #1c5888 !important;
-}
-
-.stTextArea textarea, .stSelectbox div[data-baseweb="select"] > div {
-    border-radius: 18px !important;
-    border: 1px solid rgba(153, 204, 250, 0.95) !important;
-    background: rgba(255,255,255,0.88) !important;
-    box-shadow: inset 0 1px 0 rgba(255,255,255,0.8), 0 8px 20px rgba(120, 182, 231, 0.08) !important;
+.stTextArea textarea,
+.stTextInput input,
+.stSelectbox div[data-baseweb="select"] > div {
+    background: #ffffff !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 14px !important;
+    box-shadow: none !important;
+    color: var(--text) !important;
 }
 
 .stTextArea textarea {
-    min-height: 120px;
+    min-height: 104px;
     line-height: 1.6;
-    color: var(--text-main) !important;
+}
+
+.stTextInput input {
+    min-height: 2.7rem !important;
+}
+
+div[data-testid="stSelectbox"] > label,
+div[data-testid="stTextArea"] > label,
+div[data-testid="stTextInput"] > label {
+    color: var(--text) !important;
+    font-weight: 600 !important;
 }
 
 div[data-testid="stForm"] {
-    background: rgba(255,255,255,0.52);
-    border: 1px solid rgba(169, 215, 255, 0.7);
-    border-radius: 28px;
-    padding: 1rem 1rem 0.3rem 1rem;
-    box-shadow: var(--shadow);
+    background: transparent;
+    border: none;
+    padding: 0;
+    box-shadow: none;
 }
 
-.stButton > button, .stDownloadButton > button, div[data-testid="stFormSubmitButton"] > button {
+.stButton > button,
+.stDownloadButton > button,
+div[data-testid="stFormSubmitButton"] > button {
+    width: 100%;
+    min-height: 2.9rem !important;
     border-radius: 999px !important;
     border: none !important;
-    min-height: 3rem !important;
-    font-weight: 700 !important;
-    background: linear-gradient(135deg, #5cbcff, #2b89ff) !important;
+    background: var(--primary) !important;
     color: white !important;
-    box-shadow: 0 14px 30px rgba(43, 137, 255, 0.24) !important;
+    font-weight: 700 !important;
+    box-shadow: none !important;
 }
-.stButton > button:hover, .stDownloadButton > button:hover, div[data-testid="stFormSubmitButton"] > button:hover {
-    transform: translateY(-1px);
-    filter: brightness(1.02);
+
+.stButton > button:hover,
+.stDownloadButton > button:hover,
+div[data-testid="stFormSubmitButton"] > button:hover {
+    filter: brightness(0.98);
 }
 
 div[data-testid="stExpander"] {
-    background: rgba(255,255,255,0.64);
-    border: 1px solid rgba(169, 215, 255, 0.7);
-    border-radius: 22px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--surface);
     overflow: hidden;
 }
 
 [data-testid="stAlert"] {
-    border-radius: 20px;
-    border: 1px solid rgba(169, 215, 255, 0.7);
+    border-radius: 14px;
+    border: 1px solid var(--border);
 }
 
-.sky-tip {
-    padding: 0.9rem 1rem;
-    border-radius: 18px;
-    background: linear-gradient(180deg, rgba(255,255,255,0.84), rgba(236,247,255,0.84));
-    border: 1px solid rgba(176, 221, 255, 0.75);
-    color: #416783;
-    line-height: 1.7;
+.mini-note {
+    padding: 0.75rem 0.9rem;
+    background: var(--primary-soft);
+    border: 1px solid #d6eaff;
+    border-radius: 14px;
+    color: #45637c;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
 }
 
-@media (max-width: 800px) {
-    .sky-grid {
-        grid-template-columns: 1fr;
+.result-box {
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1rem;
+    color: var(--text);
+    line-height: 1.75;
+    white-space: pre-wrap;
+}
+
+.meta-list {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.55rem;
+}
+
+.meta-item {
+    padding: 0.75rem 0.85rem;
+    background: var(--surface-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+
+.meta-label {
+    display: block;
+    color: var(--muted);
+    font-size: 0.82rem;
+    margin-bottom: 0.15rem;
+}
+
+.meta-value {
+    color: var(--text);
+    font-weight: 600;
+}
+
+@media (max-width: 768px) {
+    .block-container {
+        padding-top: 1.2rem;
     }
-    .sky-title {
-        font-size: 1.6rem;
-    }
-    .sky-hero {
-        padding: 1.45rem 1.1rem 1.1rem 1.1rem;
+
+    .app-title {
+        font-size: 1.5rem;
     }
 }
 </style>
 """
 
-def inject_sky_theme():
-    st.markdown(SKY_CSS, unsafe_allow_html=True)
 
-def get_profile_preview(selected_info: dict, limit: int = 3) -> list[tuple[str, str]]:
-    preview = []
-    for key, value in selected_info.items():
-        key_str = str(key).strip()
-        if not key_str or key_str.lower() == "id" or key in REFLECTION_KEYS:
-            continue
-        value_str = str(value).strip()
-        if not value_str:
-            continue
-        preview.append((key_str, value_str))
-        if len(preview) >= limit:
-            break
-    return preview
-
-def render_hero(selected_id: str, selected_info: dict) -> None:
-    preview = get_profile_preview(selected_info, 3)
-    cards_html = "".join(
-        f"""
-        <div class="sky-mini-card">
-            <div class="sky-mini-label">{escape_html(label)}</div>
-            <div class="sky-mini-value">{escape_html(value)}</div>
-        </div>
-        """
-        for label, value in preview
-    )
-    if not cards_html:
-        cards_html = """
-        <div class="sky-mini-card">
-            <div class="sky-mini-label">Student ID</div>
-            <div class="sky-mini-value">พร้อมเริ่มวิเคราะห์</div>
-        </div>
-        """
-    st.markdown(
-        f"""
-        <div class="sky-hero">
-            <div class="sky-badge">☁️ Sky Theme • Premium UI</div>
-            <div class="sky-title">{escape_html(APP_TITLE)}</div>
-            <div class="sky-subtitle">
-                เครื่องมือสร้าง Roadmap รายบุคคลในโทนฟ้า-ขาวแบบท้องฟ้า
-                ช่วยให้หน้าจออ่านง่าย สบายตา และดูน่าใช้งานมากขึ้นสำหรับพี่ค่ายและผู้กรอกข้อมูล
-            </div>
-            <div class="sky-grid">
-                <div class="sky-mini-card">
-                    <div class="sky-mini-label">รหัสนักเรียน</div>
-                    <div class="sky-mini-value">{escape_html(selected_id)}</div>
-                </div>
-                {cards_html}
-            </div>
-        </div>
-        """,
-        unsafe_allow_html=True,
-    )
+def inject_minimal_theme() -> None:
+    st.markdown(MINIMAL_CSS, unsafe_allow_html=True)
 
 
 APP_TITLE = "🌟 Zenith-FindYourDream"
@@ -319,6 +244,12 @@ QUESTION_MAP = {
     "q5": "5) จุดแข็งของคุณคืออะไร และมีเรื่องไหนที่อยากพัฒนาตัวเองเพิ่ม",
     "q6": "6) เป้าหมายหรือความฝันในอนาคตที่อยากไปถึงคืออะไร",
 }
+
+FACULTY_RANK_FIELDS = [
+    ("faculty_choice_1", "คณะที่อยากเข้าอันดับ 1"),
+    ("faculty_choice_2", "คณะที่อยากเข้าอันดับ 2"),
+    ("faculty_choice_3", "คณะที่อยากเข้าอันดับ 3"),
+]
 
 REFLECTION_KEYS = [
     "ฐานวิชาการ 1 : แบ่งน้ำปันใจ",
@@ -483,7 +414,25 @@ def get_prepost_scores(selected_info: dict) -> list[dict]:
 
 
 def build_default_form_answers() -> dict:
-    return {key: "" for key in QUESTION_MAP}
+    answers = {key: "" for key in QUESTION_MAP}
+    for key, _ in FACULTY_RANK_FIELDS:
+        answers[key] = ""
+    return answers
+
+
+def get_profile_preview(selected_info: dict, limit: int = 4) -> list[tuple[str, str]]:
+    preview = []
+    for key, value in selected_info.items():
+        key_str = str(key).strip()
+        if not key_str or key_str.lower() == "id" or key in REFLECTION_KEYS:
+            continue
+        value_str = str(value).strip()
+        if not value_str:
+            continue
+        preview.append((key_str, value_str))
+        if len(preview) >= limit:
+            break
+    return preview
 
 
 # =========================================================
@@ -628,6 +577,12 @@ def create_pdf_bytes(user_id: str, profile: dict | None, answers: dict, analysis
         content.append(Paragraph("ไม่พบข้อมูลจากระบบ", normal_style))
 
     content.append(Spacer(1, 8))
+    content.append(Paragraph("คณะที่นักเรียนสนใจ", header_style))
+    for key, label in FACULTY_RANK_FIELDS:
+        value = sanitize_pdf_text(answers.get(key, "-") or "-")
+        content.append(Paragraph(f"<b>{sanitize_pdf_text(label)}:</b> {value}", normal_style))
+
+    content.append(Spacer(1, 8))
     content.append(Paragraph("คำตอบของนักเรียน", header_style))
     for key, label in QUESTION_MAP.items():
         answer = sanitize_pdf_text(answers.get(key, "-"))
@@ -687,6 +642,11 @@ def build_context_text(selected_info: dict) -> str:
 
 def build_answers_text(answers: dict) -> str:
     lines = []
+    faculty_lines = []
+    for key, label in FACULTY_RANK_FIELDS:
+        faculty_lines.append(f"{label}: {answers.get(key, '').strip() or '-'}")
+    lines.append("คณะที่นักเรียนอยากเข้า:\n" + "\n".join(faculty_lines))
+
     for key, label in QUESTION_MAP.items():
         lines.append(f"{label}\n{answers.get(key, '').strip() or '-'}")
     return "\n\n".join(lines)
@@ -705,6 +665,7 @@ def build_analysis_prompt(context: str, answers: dict) -> str:
 
 หลักการตอบ:
 - วิเคราะห์จากข้อมูลในระบบและคำตอบของนักเรียนร่วมกัน
+- ให้ความสำคัญกับคณะที่นักเรียนสนใจ 3 อันดับแรก แต่ยังสามารถเสนอทางเลือกอื่นที่เหมาะกว่าได้หากมีเหตุผลรองรับ
 - หากข้อมูลบางส่วนยังไม่ชัด ให้ระบุว่าเป็นแนวโน้ม ไม่สรุปเกินจริง
 - ใช้ภาษาไทยสุภาพ ชัดเจน อบอุ่น และนำไปใช้ได้จริง
 - เน้นคำแนะนำเชิงปฏิบัติ ไม่กว้างเกินไป
@@ -713,17 +674,18 @@ def build_analysis_prompt(context: str, answers: dict) -> str:
 โปรดตอบในหัวข้อดังนี้:
 1. ภาพรวมตัวตนและความสนใจ
 2. วิเคราะห์ความถนัดและจุดที่ควรพัฒนา
-3. แนวทางคณะ / สาขา / อาชีพที่เหมาะ 3-5 ตัวเลือก พร้อมเหตุผล
-4. Roadmap การพัฒนา
+3. วิเคราะห์คณะที่นักเรียนสนใจ 3 อันดับแรก ว่าสอดคล้องกับข้อมูลอย่างไร
+4. แนวทางคณะ / สาขา / อาชีพที่เหมาะ 3-5 ตัวเลือก พร้อมเหตุผล
+5. Roadmap การพัฒนา
    - ระยะสั้น (0-3 เดือน)
    - ระยะกลาง (6-12 เดือน)
    - ระยะยาว (การเตรียมตัวเข้ามหาวิทยาลัย)
-5. ทักษะที่ควรพัฒนา
+6. ทักษะที่ควรพัฒนา
    - hard skills
    - soft skills
    - วิธีฝึกที่ทำได้จริง
-6. คำแนะนำในการเตรียมสอบและทำพอร์ต
-7. ข้อความส่งท้ายให้กำลังใจ
+7. คำแนะนำในการเตรียมสอบและทำพอร์ต
+8. ข้อความส่งท้ายให้กำลังใจ
 """.strip()
 
 
@@ -764,25 +726,41 @@ init_session_state()
 
 
 # =========================================================
+# UI HELPERS
+# =========================================================
+def render_student_summary(selected_id: str, selected_info: dict) -> None:
+    preview = get_profile_preview(selected_info, 4)
+    st.markdown('<div class="card">', unsafe_allow_html=True)
+    st.markdown('<div class="card-title">ข้อมูลเบื้องต้น</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="card-subtitle">สรุปข้อมูลจากระบบแบบย่อ เพื่อเช็กก่อนสร้างผลวิเคราะห์</div>',
+        unsafe_allow_html=True,
+    )
+
+    items = [
+        f'<div class="meta-item"><span class="meta-label">รหัสนักเรียน</span><span class="meta-value">{escape_html(selected_id)}</span></div>'
+    ]
+    for label, value in preview:
+        items.append(
+            f'<div class="meta-item"><span class="meta-label">{escape_html(label)}</span><span class="meta-value">{escape_html(value)}</span></div>'
+        )
+    st.markdown(f'<div class="meta-list">{"".join(items)}</div>', unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
+
+
+# =========================================================
 # UI
 # =========================================================
-inject_sky_theme()
+inject_minimal_theme()
 
 st.markdown(
-    """
-    <div class="section-shell">
-        <div class="section-heading">🌤️ วิธีใช้งานระบบ</div>
-        <div class="section-copy">
-            เลือกรหัสนักเรียน กรอกคำตอบของน้องให้ได้ข้อมูลเชิงลึกมากที่สุด
-            จากนั้นกดสร้าง Roadmap เพื่อให้ AI สรุปภาพรวม จุดแข็ง แนวทางคณะ และแผนพัฒนารายบุคคล
-        </div>
-        <div class="sky-tip">
-            1) เลือก ID นักเรียน<br>
-            2) ชวนให้น้องสะท้อนตัวเองจากคำถามหลักและคำถามเสริม<br>
-            3) กด <b>สร้าง Roadmap</b> เพื่อประมวลผล<br>
-            4) ดาวน์โหลด PDF หรือเปิดดูผลวิเคราะห์ล่าสุดได้ทันที<br><br>
-            หากระบบช้า ให้ refresh แล้วลองใหม่อีกครั้งหลังเว้นช่วงสั้น ๆ
-        </div>
+    f"""
+    <div class="app-header">
+        <div class="app-title">{APP_TITLE}</div>
+        <div class="app-subtitle">{APP_SUBTITLE}</div>
+    </div>
+    <div class="mini-note">
+        เลือกนักเรียน กรอกข้อมูลสะท้อนตัวตนและคณะที่อยากเข้า แล้วกดสร้าง Roadmap เพื่อรับคำแนะนำรายบุคคล
     </div>
     """,
     unsafe_allow_html=True,
@@ -800,9 +778,9 @@ if not sheet_data:
 
 display_options = get_student_display_options(sheet_data)
 
-st.markdown('<div class="section-shell">', unsafe_allow_html=True)
-st.markdown('<div class="section-heading">🫧 เลือกข้อมูลนักเรียน</div>', unsafe_allow_html=True)
-st.markdown('<div class="section-copy">เลือก ID เพื่อโหลดข้อมูลพื้นฐานของน้องก่อนเริ่มวิเคราะห์</div>', unsafe_allow_html=True)
+st.markdown('<div class="card">', unsafe_allow_html=True)
+st.markdown('<div class="card-title">ข้อมูลนักเรียน</div>', unsafe_allow_html=True)
+st.markdown('<div class="card-subtitle">เลือก ID เพื่อโหลดข้อมูลพื้นฐานก่อนเริ่มวิเคราะห์</div>', unsafe_allow_html=True)
 selected_id = st.selectbox("เลือก ID นักเรียน", display_options)
 selected_info = get_selected_student(sheet_data, selected_id)
 st.markdown('</div>', unsafe_allow_html=True)
@@ -815,25 +793,79 @@ if st.session_state.last_selected_id != selected_id:
     st.session_state.last_selected_id = selected_id
     reset_current_student_state()
 
-render_hero(selected_id, selected_info)
+render_student_summary(selected_id, selected_info)
 
-st.markdown('<div class="section-shell">', unsafe_allow_html=True)
-st.markdown('<div class="section-heading">✍️ แบบฟอร์มสะท้อนตัวตน</div>', unsafe_allow_html=True)
-st.markdown('<div class="section-copy">ตอบอย่างน้อย 3 ข้อเพื่อให้ผลวิเคราะห์มีคุณภาพมากขึ้น และยิ่งละเอียด AI จะยิ่งแนะนำได้แม่นขึ้น</div>', unsafe_allow_html=True)
+st.markdown('<div class="card">', unsafe_allow_html=True)
+st.markdown('<div class="card-title">แบบฟอร์มสะท้อนตัวตน</div>', unsafe_allow_html=True)
+st.markdown(
+    '<div class="card-subtitle">กรอกคณะที่อยากเข้า 3 อันดับแรก และตอบอย่างน้อย 3 ข้อเพื่อให้ผลวิเคราะห์ชัดขึ้น</div>',
+    unsafe_allow_html=True,
+)
 
 with st.form("roadmap_form"):
-    q1 = st.text_area(QUESTION_MAP["q1"], value=st.session_state.form_answers.get("q1", ""), height=115, placeholder="เช่น สนใจชีววิทยา งานอาสา การดูแลคน หรือชอบเรียนรู้เรื่องสุขภาพ")
-    q2 = st.text_area(QUESTION_MAP["q2"], value=st.session_state.form_answers.get("q2", ""), height=115, placeholder="อธิบายวิชาที่ถนัด พร้อมเหตุผลหรือประสบการณ์ที่ทำให้รู้สึกว่าไปได้ดี")
-    q3 = st.text_area(QUESTION_MAP["q3"], value=st.session_state.form_answers.get("q3", ""), height=115, placeholder="มีคณะ อาชีพ หรือเส้นทางที่แอบสนใจอยู่แล้วหรือยัง")
-    q4 = st.text_area(QUESTION_MAP["q4"], value=st.session_state.form_answers.get("q4", ""), height=115, placeholder="เล่ากิจกรรมที่สะท้อนตัวตน เช่น ค่าย แข่งขัน จิตอาสา ชมรม หรือโปรเจกต์ต่าง ๆ")
-    q5 = st.text_area(QUESTION_MAP["q5"], value=st.session_state.form_answers.get("q5", ""), height=115, placeholder="เล่าทั้งจุดแข็งและจุดที่อยากพัฒนา เพื่อให้ roadmap ออกมาชัดขึ้น")
-    q6 = st.text_area(QUESTION_MAP["q6"], value=st.session_state.form_answers.get("q6", ""), height=115, placeholder="บอกความฝัน เป้าหมาย หรือภาพอนาคตที่อยากเห็นตัวเองไปถึง")
-    submitted = st.form_submit_button("☁️ สร้าง Roadmap")
+    st.markdown("#### คณะที่อยากเข้า 3 อันดับแรก")
+    faculty_choice_1 = st.text_input(
+        FACULTY_RANK_FIELDS[0][1],
+        value=st.session_state.form_answers.get("faculty_choice_1", ""),
+        placeholder="เช่น แพทยศาสตร์",
+    )
+    faculty_choice_2 = st.text_input(
+        FACULTY_RANK_FIELDS[1][1],
+        value=st.session_state.form_answers.get("faculty_choice_2", ""),
+        placeholder="เช่น ทันตแพทยศาสตร์",
+    )
+    faculty_choice_3 = st.text_input(
+        FACULTY_RANK_FIELDS[2][1],
+        value=st.session_state.form_answers.get("faculty_choice_3", ""),
+        placeholder="เช่น เภสัชศาสตร์",
+    )
+
+    st.markdown("#### คำถามสะท้อนตัวตน")
+    q1 = st.text_area(
+        QUESTION_MAP["q1"],
+        value=st.session_state.form_answers.get("q1", ""),
+        height=100,
+        placeholder="เช่น ชอบชีววิทยา สุขภาพ หรือการช่วยเหลือผู้อื่น",
+    )
+    q2 = st.text_area(
+        QUESTION_MAP["q2"],
+        value=st.session_state.form_answers.get("q2", ""),
+        height=100,
+        placeholder="เช่น ถนัดเคมี เพราะชอบวิเคราะห์และทำโจทย์",
+    )
+    q3 = st.text_area(
+        QUESTION_MAP["q3"],
+        value=st.session_state.form_answers.get("q3", ""),
+        height=100,
+        placeholder="เช่น แพทย์ เภสัช ทันตะ วิทยาศาสตร์สุขภาพ",
+    )
+    q4 = st.text_area(
+        QUESTION_MAP["q4"],
+        value=st.session_state.form_answers.get("q4", ""),
+        height=100,
+        placeholder="เช่น ค่าย ชมรม แข่งขัน หรือกิจกรรมอาสา",
+    )
+    q5 = st.text_area(
+        QUESTION_MAP["q5"],
+        value=st.session_state.form_answers.get("q5", ""),
+        height=100,
+        placeholder="เช่น สื่อสารดี รับผิดชอบ แต่ยังอยากพัฒนาวินัย",
+    )
+    q6 = st.text_area(
+        QUESTION_MAP["q6"],
+        value=st.session_state.form_answers.get("q6", ""),
+        height=100,
+        placeholder="เช่น อยากสอบติดคณะที่ชอบและมีเส้นทางอาชีพชัดเจน",
+    )
+    submitted = st.form_submit_button("สร้าง Roadmap")
 
 st.markdown('</div>', unsafe_allow_html=True)
 
 if submitted:
     answers = {
+        "faculty_choice_1": faculty_choice_1.strip(),
+        "faculty_choice_2": faculty_choice_2.strip(),
+        "faculty_choice_3": faculty_choice_3.strip(),
         "q1": q1.strip(),
         "q2": q2.strip(),
         "q3": q3.strip(),
@@ -843,7 +875,7 @@ if submitted:
     }
     st.session_state.form_answers = answers
 
-    answered_count = sum(1 for value in answers.values() if value.strip())
+    answered_count = sum(1 for key, value in answers.items() if key.startswith("q") and value.strip())
     if answered_count < 3:
         st.warning("กรุณาตอบอย่างน้อย 3 ข้อ เพื่อให้ AI วิเคราะห์ได้มีคุณภาพมากขึ้น")
     else:
@@ -882,13 +914,13 @@ if submitted:
             except Exception as exc:
                 st.error(f"เกิดข้อผิดพลาดระหว่างการประมวลผล: {type(exc).__name__}: {exc}")
 
-st.markdown('<div class="section-shell">', unsafe_allow_html=True)
-st.markdown('<div class="section-heading">📦 ผลลัพธ์และไฟล์</div>', unsafe_allow_html=True)
-st.markdown('<div class="section-copy">หลังประมวลผลเสร็จ สามารถดาวน์โหลด PDF หรือเปิดไฟล์ที่เก็บบน Supabase ได้จากส่วนนี้</div>', unsafe_allow_html=True)
+st.markdown('<div class="card">', unsafe_allow_html=True)
+st.markdown('<div class="card-title">ผลลัพธ์</div>', unsafe_allow_html=True)
+st.markdown('<div class="card-subtitle">ดาวน์โหลดไฟล์หรือดูผลวิเคราะห์ล่าสุดได้จากส่วนนี้</div>', unsafe_allow_html=True)
 
 if st.session_state.latest_pdf_bytes and st.session_state.latest_pdf_name:
     st.download_button(
-        "📄 ดาวน์โหลด PDF Roadmap",
+        "ดาวน์โหลด PDF",
         data=st.session_state.latest_pdf_bytes,
         file_name=st.session_state.latest_pdf_name,
         mime="application/pdf",
@@ -898,13 +930,18 @@ if st.session_state.latest_pdf_bytes and st.session_state.latest_pdf_name:
 if st.session_state.latest_storage_path:
     st.caption(f"Supabase path: {st.session_state.latest_storage_path}")
 if st.session_state.latest_public_url:
-    st.link_button("🔗 เปิดไฟล์จาก Supabase", st.session_state.latest_public_url)
+    st.link_button("เปิดไฟล์จาก Supabase", st.session_state.latest_public_url)
 
-with st.expander("🔎 ดูผลวิเคราะห์ล่าสุด"):
-    st.write(st.session_state.analysis_result or "ยังไม่มีผลวิเคราะห์")
+st.markdown("#### ผลวิเคราะห์ล่าสุด")
+st.markdown(
+    f'<div class="result-box">{escape_html(st.session_state.analysis_result or "ยังไม่มีผลวิเคราะห์")}</div>',
+    unsafe_allow_html=True,
+)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-if st.button("🧹 ล้างข้อมูลทั้งหมด", use_container_width=True):
+st.markdown('<div class="card">', unsafe_allow_html=True)
+if st.button("ล้างข้อมูล", use_container_width=True):
     reset_current_student_state()
     st.rerun()
+st.markdown('</div>', unsafe_allow_html=True)
