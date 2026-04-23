@@ -826,31 +826,37 @@ with st.form("roadmap_form"):
         QUESTION_MAP["q1"],
         value=st.session_state.form_answers.get("q1", ""),
         height=100,
+        placeholder="เช่น ชอบกิจกรรมวิชาการโดยเฉพาะกิจกรรมแลปวิชาการเพราะทำให้น้องได้ค้นพบ....และได้พัฒนา....",
     )
     q2 = st.text_area(
         QUESTION_MAP["q2"],
         value=st.session_state.form_answers.get("q2", ""),
         height=100,
+        placeholder="เช่น รู้สึกท้าทายตอนทำกิจกรรม....และรับมือด้วยวิธี....ทำให้ได้เรียนรู้....."
     )
     q3 = st.text_area(
         QUESTION_MAP["q3"],
         value=st.session_state.form_answers.get("q3", ""),
         height=100,
+        placeholder="เช่น น้องคิดว่าในการเล่นกิจกรรมเป็นทีมน้อง ๆ ทำหน้าที่....เพราะ...."
     )
     q4 = st.text_area(
         QUESTION_MAP["q4"],
         value=st.session_state.form_answers.get("q4", ""),
         height=100,
+        placeholder="เช่น น้องได้ค้นพบ....จากกิจกรรมนี้....และจะนำไปใช้อย่างไร"
     )
     q5 = st.text_area(
         QUESTION_MAP["q5"],
         value=st.session_state.form_answers.get("q5", ""),
         height=100,
+        placeholder="เช่น เปลี่ยนไป/ไม่เปลี่ยน....อย่างไรและเพราะอะไร"
     )
     q6 = st.text_area(
         QUESTION_MAP["q6"],
         value=st.session_state.form_answers.get("q6", ""),
         height=100,
+        placeholder="เช่น เปลี่ยนไป/ไม่เปลี่ยน....อย่างไรและเพราะอะไร"
     )
     submitted = st.form_submit_button("สร้าง Roadmap")
 
